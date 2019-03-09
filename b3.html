@@ -1,0 +1,46 @@
+<script>
+
+	var sum 	= 11999;
+	var term 	= 17; // months
+	var rate	= 12.99; // %/year
+
+	// annuity coefficient formula
+	var coeff = (rate / 100 / 12) * ((1 + rate / 100 / 12) ** term) / ((1 + rate / 100 / 12) ** term - 1) ;
+
+	var monthly_pay = coeff * sum;
+	monthly_pay = Math.round(monthly_pay * 100)/100 ;
+
+	var overpay = 0;
+
+	for(var i = 1; i <= term; i++){
+
+			var percent_part = sum * rate / 100 / 12;
+			percent_part = Math.round(percent_part * 100)/100;
+
+			if (i == term) {
+				monthly_pay = sum + percent_part;
+				monthly_pay = Math.round(monthly_pay * 100)/100;
+			}
+
+			var body_part = monthly_pay - percent_part
+			body_part = Math.round(body_part * 100)/100;
+
+			sum = sum - body_part;
+			sum = Math.round(sum * 100) / 100;
+
+			overpay += percent_part
+
+			console.log(`
+				Month ${i}:
+				Total pay: ${monthly_pay},
+				Body part: ${body_part},
+				Percent part: ${percent_part},
+				LEFT: ${sum}
+			`);
+		}
+
+		overpay = Math.round(overpay * 100) / 100;
+		console.log("Overpay:", overpay);
+
+
+</script>
